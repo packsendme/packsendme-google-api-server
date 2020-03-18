@@ -27,9 +27,10 @@ public class AnalyzeData_Component {
 	@Autowired
 	private Tolls_DAO toll_dao;
 	
-	public TollsResponse_Dto analyzeJsonTolls(JSONObject jsonObject, String countryName){
+	public TollsResponse_Dto analyzeJsonTolls(JSONObject jsonObject){
 		int tolls = 0;
         Map<String, Integer> mapsAnalise = new HashMap<String, Integer>();
+        String countryName = null;
 
         try {
 	        JSONArray jsonRoutes = (JSONArray) jsonObject.get("routes");
@@ -41,6 +42,8 @@ public class AnalyzeData_Component {
 			    
 			    for (Iterator itLegs = jsonArrayLegs.iterator(); itLegs.hasNext();) {
 			    	JSONObject jsonStepsX = (JSONObject) itLegs.next();
+        	    	String countryOrigin = jsonStepsX.get("start_address").toString();
+        	    	countryName = subStringCountryOrigin(countryOrigin);
 			    	jsonSteps = (JSONArray) jsonStepsX.get("steps");  //steps   
 				}
 			    
@@ -68,7 +71,7 @@ public class AnalyzeData_Component {
 			if (mapsAnalise.size() > 0) {
 				tollsAnalyzeDto.status_tolls = true;
 				tollsAnalyzeDto.tolls = mapsAnalise;
-				//Analyze-TollCosts / Find Costs Tolls
+				//Analyze-TollCosts by Country / Find Costs Tolls
 				tollsAnalyzeDto.costsTolls = toll_dao.find(tollsAnalyzeDto);
 			}
 			return tollsAnalyzeDto;
@@ -84,6 +87,7 @@ public class AnalyzeData_Component {
 	  return bool;
 	}
 	
+	// Country change in JSON
 	public String subStringCountry(String contain) {
 		int startMatch = 0;
 		int endMatch = 0;
@@ -97,5 +101,22 @@ public class AnalyzeData_Component {
 		}
 		String new2 = StringUtils.substring(new1, startMatch, new1.length() + endMatch);
 		return StringUtils.substringAfter(new2, ANALYSE_PATTERN_COUNTRY);
+	}
+
+	// Country Origin destination
+	public String subStringCountryOrigin(String contain) {
+		
+		int startMatch = 0;
+		int endMatch = 0;
+		
+		Pattern pattern = Pattern.compile(",");
+		Matcher matcher = pattern.matcher(contain);
+		while(matcher.find()){
+			startMatch = matcher.start();
+			endMatch = matcher.end();
+		}
+		String new2 = StringUtils.substring(contain, startMatch, contain.length() + endMatch);
+		String new3 = StringUtils.substringAfter(new2, ",");
+		return new3;
 	}
 }

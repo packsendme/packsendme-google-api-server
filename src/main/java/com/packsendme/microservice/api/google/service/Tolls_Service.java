@@ -20,9 +20,7 @@ import com.packsendme.lib.common.constants.HttpExceptionPackSend;
 import com.packsendme.lib.common.response.Response;
 import com.packsendme.microservice.api.google.component.AnalyzeData_Component;
 import com.packsendme.microservice.api.google.config.Connection_Config;
-import com.packsendme.microservice.api.google.dao.Tolls_DAO;
 import com.packsendme.microservice.api.google.dto.TollsResponse_Dto;
-import com.packsendme.microservice.api.google.repository.Tolls_Model;
  
 
 @Service
@@ -37,16 +35,9 @@ public class Tolls_Service {
 	@Autowired
 	private TollsResponse_Dto tollsResponse_Dto; 
 	
-	@Autowired
-	private Tolls_DAO tolls_DAO;
-	
-
 	public ResponseEntity<?> getTollsAnalyze(String origin, String destination) {
 		Response<TollsResponse_Dto> responseObj = null;
 		String jsonBodyS = null;
-		JSONObject jObject = null;
-		Map<String, Double> tollCostsMap = null;
-		
 		try {
 			RestTemplate restTemplate = new RestTemplate();
 			
@@ -75,7 +66,7 @@ public class Tolls_Service {
 		    	JSONObject jsonObject = (JSONObject) parser.parse(jsonBodyS);
 		    	
 		    	if(jsonObject.get("status") == "OK") {
-		    		tollsResponse_Dto = analyzeData_Component.analyzeJsonTolls(jsonObject, destination);
+		    		tollsResponse_Dto = analyzeData_Component.analyzeJsonTolls(jsonObject);
 		    		responseObj = new Response<TollsResponse_Dto>(0,HttpExceptionPackSend.GOOGLEAPI_PLACE.getAction(), tollsResponse_Dto);
 					return new ResponseEntity<>(responseObj, HttpStatus.ACCEPTED);
 		    	}
