@@ -8,10 +8,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.Getter;
 import lombok.Setter;
 
-@Document(collection = "Tolls")
+@Document(collection = "tolls_country_pks")
 @Getter
 @Setter
-public class Tolls_Model implements Serializable {
+public class Tolls_Country_Model implements Serializable {
 
 	/**
 	 * 
@@ -19,8 +19,11 @@ public class Tolls_Model implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	public String id;
-	public String nameCountry;
-	public Double tollCost;
+	public int id;
+	public String name_country;
+	public Double toll_cost;
+	public String currency_cost;
+	public String currency_desc;
+	public String status;
 	
 }
