@@ -34,7 +34,7 @@ public class GoogleAPI_Controller {
 		return googleDirection.loadDistancesCities(origins, destinations);
 	}
 
-	@GetMapping("/tolls/{id}")
+	@GetMapping("/tolls")
 	public ResponseEntity<?> getTolls(
 			@Validated @RequestBody SimulationRequest_Dto simulation) throws JsonProcessingException, IOException {		
 		return tolls_Service.getTollsAnalyze(simulation);
