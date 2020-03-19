@@ -36,8 +36,14 @@ public class GoogleAPI_Controller {
 		return googleDirection.loadDistancesCities(origins, destinations);
 	}
 
-	@GetMapping("/tolls/{origins}/")
+	@PostMapping("/tolls")
 	public ResponseEntity<?> getTolls(
+			@Validated @RequestBody SimulationRequest_Dto simulation) throws JsonProcessingException, IOException {
+		return tolls_Service.getTollsAnalyze(simulation);
+	}
+
+	@GetMapping("/test/{origins}")
+	public ResponseEntity<?> getTest(
 			@Validated @PathVariable ("origins") String origins) throws JsonProcessingException, IOException {
 		ResponseEntity<String> resp = new ResponseEntity<String>(HttpStatus.ACCEPTED);
 		System.out.print("origins");
