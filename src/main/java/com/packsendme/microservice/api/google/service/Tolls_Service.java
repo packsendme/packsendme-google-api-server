@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.packsendme.lib.common.constants.HttpExceptionPackSend;
 import com.packsendme.lib.common.response.Response;
+import com.packsendme.lib.simulation.request.dto.SimulationRequest_Dto;
 import com.packsendme.microservice.api.google.component.AnalyzeData_Component;
 import com.packsendme.microservice.api.google.config.Connection_Config;
 import com.packsendme.microservice.api.google.dto.TollsResponse_Dto;
@@ -35,7 +36,7 @@ public class Tolls_Service {
 	@Autowired
 	private TollsResponse_Dto tollsResponse_Dto; 
 	
-	public ResponseEntity<?> getTollsAnalyze(String origin, String destination) {
+	public ResponseEntity<?> getTollsAnalyze(SimulationRequest_Dto simulation) {
 		Response<TollsResponse_Dto> responseObj = null;
 		String jsonBodyS = null;
 		try {
@@ -47,8 +48,8 @@ public class Tolls_Service {
 			HttpEntity request = new HttpEntity(headers);
 			
 			Map<String, String> uriParam = new HashMap<>();
-		    uriParam.put("origin", origin);
-		    uriParam.put("destination", destination);
+		    uriParam.put("origin", simulation.address_origin);
+		    uriParam.put("destination", simulation.address_destination);
 		    uriParam.put("key", configuration.key_api);
 		    uriParam.put("travel_mode", "DRIVING");
 		    uriParam.put("avoidTolls", "false");
