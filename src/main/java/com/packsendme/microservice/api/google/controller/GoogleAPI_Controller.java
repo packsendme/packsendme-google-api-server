@@ -36,7 +36,7 @@ public class GoogleAPI_Controller {
 		return googleDirection.loadDistancesCities(origins, destinations);
 	}
 
-	@GetMapping("/tolls")
+	@GetMapping("/tolls/{origins}/")
 	public ResponseEntity<?> getTolls(
 			@Validated @PathVariable ("origins") String origins) throws JsonProcessingException, IOException {
 		ResponseEntity<String> resp = new ResponseEntity<String>(HttpStatus.ACCEPTED);
