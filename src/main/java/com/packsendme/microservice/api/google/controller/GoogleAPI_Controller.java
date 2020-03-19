@@ -3,6 +3,7 @@ package com.packsendme.microservice.api.google.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,10 +36,14 @@ public class GoogleAPI_Controller {
 		return googleDirection.loadDistancesCities(origins, destinations);
 	}
 
-	@PostMapping("/tolls")
+	@GetMapping("/tolls")
 	public ResponseEntity<?> getTolls(
-			@Validated @RequestBody SimulationRequest_Dto simulation) throws JsonProcessingException, IOException {		
-		return tolls_Service.getTollsAnalyze(simulation);
+			@Validated @PathVariable ("origins") String origins) throws JsonProcessingException, IOException {
+		ResponseEntity<String> resp = new ResponseEntity<String>(HttpStatus.ACCEPTED);
+		System.out.print("origins");
+		return resp;
+		//return tolls_Service.getTollsAnalyze(simulation);
 	}
 
+	// @Validated @RequestBody SimulationRequest_Dto simulation
 }
