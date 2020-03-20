@@ -5,7 +5,7 @@ pipeline {
         NAME_CONTAINER = "googleapi-microservice-psm"
         NAME_IMAGE = "googleapi-image-psm:1"
         ID_CONTAINER = null 
-        PORT_CONTAINER = "9099:9099"
+        PORT_CONTAINER = "9019:9019"
     }
 
     stages {
