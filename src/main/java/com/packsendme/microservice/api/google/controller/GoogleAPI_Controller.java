@@ -50,4 +50,11 @@ public class GoogleAPI_Controller {
 		//return tolls_Service.getTollsAnalyze(simulation);
 	}
 
+	
+	@GetMapping("/oi")
+	public String getOi() {
+		System.out.print("origins");
+		return "Oi";
+	}
+
 }
