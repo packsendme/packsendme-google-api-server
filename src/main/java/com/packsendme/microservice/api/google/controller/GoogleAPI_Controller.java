@@ -20,7 +20,7 @@ import com.packsendme.microservice.api.google.service.Tolls_Service;
 
 
 @RestController
-@RequestMapping("/api/google")
+@RequestMapping("/api/tolls")
 public class GoogleAPI_Controller {
 
 	@Autowired
@@ -36,7 +36,7 @@ public class GoogleAPI_Controller {
 		return googleDirection.loadDistancesCities(origins, destinations);
 	}
 
-	@PostMapping("/tolls")
+	@PostMapping("/costs")
 	public ResponseEntity<?> getTolls(
 			@Validated @RequestBody SimulationRequest_Dto simulation) throws JsonProcessingException, IOException {
 		return tolls_Service.getTollsAnalyze(simulation);
@@ -51,5 +51,4 @@ public class GoogleAPI_Controller {
 		//return tolls_Service.getTollsAnalyze(simulation);
 	}
 
-	// @Validated @RequestBody SimulationRequest_Dto simulation
 }
